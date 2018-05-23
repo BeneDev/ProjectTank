@@ -14,6 +14,7 @@ ATank::ATank()
 // Called when the game starts or when spawned
 void ATank::BeginPlay()
 {
+	//shitty ass gay tank
 	Super::BeginPlay();
 	
 }
@@ -22,7 +23,7 @@ void ATank::BeginPlay()
 void ATank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	//follow me iksdeh
 }
 
 // Called to bind functionality to input

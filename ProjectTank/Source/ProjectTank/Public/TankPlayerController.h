@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-
+//gay includes
 #include "Tank.h"
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
@@ -18,5 +18,7 @@ class PROJECTTANK_API ATankPlayerController : public APlayerController
 	
 public:
 	ATank* GetControlledTank() const;
+
+	virtual void BeginPlay() override;
 	
 };
