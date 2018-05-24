@@ -31,13 +31,18 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& outHitLocation) cons
 	GetViewportSize(ViewportSizeX, ViewportSizeY);
 	FVector2D CrosshairScreenLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);
 	FVector LookDirection;
-	GetLoockDirection(CrosshairScreenLocation, LookDirection);
-
-	// Shoot Linetrace through the point and check if something is hit
+	if (GetLookDirection(CrosshairScreenLocation, LookDirection))
+	{
+		// Shoot Linetrace through the point and check if something is hit
+		if (GetLookVectorHitLocation(outHitLocation, LookDirection))
+		{
+			return true;
+		}
+	}
 	return false;
 }
 
-bool ATankPlayerController::GetLoockDirection(FVector2D ScreenLocation, FVector& LookDirection) const
+bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const
 {
 	FVector CameraWorldLocation;
 
@@ -46,6 +51,20 @@ bool ATankPlayerController::GetLoockDirection(FVector2D ScreenLocation, FVector&
 	{
 		return true;
 	}
+	return false;
+}
+
+bool ATankPlayerController::GetLookVectorHitLocation(FVector& outHitLocation, FVector LookDirection) const
+{
+	FHitResult HitResult;
+	FVector StartPosition = PlayerCameraManager->GetCameraLocation();
+	FVector EndPosition = StartPosition + LookDirection * LineTraceRange;
+	if(GetWorld()->LineTraceSingleByChannel(HitResult, StartPosition, EndPosition, ECollisionChannel::ECC_Visibility))
+	{
+		outHitLocation = HitResult.Location;
+		return true;
+	}
+	outHitLocation = FVector(0);
 	return false;
 }
 

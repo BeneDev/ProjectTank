@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Engine/World.h"
 #include "Tank.h"
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
@@ -33,11 +34,15 @@ private:
 	bool GetSightRayHitLocation(FVector& outHitLocation) const;
 
 	// Get the absolute look direction of the player
-	bool GetLoockDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
+	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
+
+	bool GetLookVectorHitLocation(FVector& outHitLocation, FVector LookDirection) const;
 
 	UPROPERTY(EditAnywhere)
 	float CrosshairXLocation = 0.5;
 	UPROPERTY(EditAnywhere)
 	float CrosshairYLocation = 0.333333;
+	UPROPERTY(EditAnywhere)
+	int LineTraceRange = 1000000;
 	
 };
