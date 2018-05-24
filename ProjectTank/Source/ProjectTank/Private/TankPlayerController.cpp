@@ -26,8 +26,26 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 bool ATankPlayerController::GetSightRayHitLocation(FVector& outHitLocation) const
 {
-	outHitLocation = FVector(1.0);
+	// Get the positino of the crosshair in the viewport
+	int32 ViewportSizeX, ViewportSizeY;
+	GetViewportSize(ViewportSizeX, ViewportSizeY);
+	FVector2D CrosshairScreenLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);
+	FVector LookDirection;
+	GetLoockDirection(CrosshairScreenLocation, LookDirection);
+
 	// Shoot Linetrace through the point and check if something is hit
+	return false;
+}
+
+bool ATankPlayerController::GetLoockDirection(FVector2D ScreenLocation, FVector& LookDirection) const
+{
+	FVector CameraWorldLocation;
+
+	// Deproject the crosshairScreen location to world coordinates
+	if (DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, CameraWorldLocation, LookDirection))
+	{
+		return true;
+	}
 	return false;
 }
 
