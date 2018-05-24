@@ -18,7 +18,15 @@ class PROJECTTANK_API ATankPlayerController : public APlayerController
 	
 public:
 	ATank* GetControlledTank() const;
+	// Aims the barrel in a way, so a shot would hit this target in the world
+	void AimTowardsCrosshair();
 
 	virtual void BeginPlay() override;
+
+	virtual void Tick(float DeltaTime) override;
+
+private:
+	// Gets the hit location in the world, you linetrace through the crosshair. True if landscape is hit.
+	bool GetSightRayHitLocation(FVector& outHitLocation) const;
 	
 };
